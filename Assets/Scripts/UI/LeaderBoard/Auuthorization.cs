@@ -1,12 +1,12 @@
 using Agava.YandexGames;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Auuthorization : MonoBehaviour
+namespace UI.LeaderBoardSystem
 {
-    public void AuthorizePlayer()
+    public class Auuthorization : MonoBehaviour
     {
+        public void AuthorizePlayer()
+        {
 #if !UNITY_EDITOR
         PlayerAccount.Authorize();
         RequestDataPermission();
@@ -16,13 +16,15 @@ public class Auuthorization : MonoBehaviour
             return;
         }
 #endif
-    }
+        }
 
-    private void RequestDataPermission()
-    {
-        if (PlayerAccount.IsAuthorized)
+        private void RequestDataPermission()
         {
-            PlayerAccount.RequestPersonalProfileDataPermission();
+            if (PlayerAccount.IsAuthorized)
+            {
+                PlayerAccount.RequestPersonalProfileDataPermission();
+            }
         }
     }
 }
+

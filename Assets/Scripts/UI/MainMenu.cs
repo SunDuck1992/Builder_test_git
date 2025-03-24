@@ -1,19 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using ConstValues;
 
-public class MainMenu : MonoBehaviour
+namespace UI
 {
-    public void PlayGame()
+    public class MainMenu : MonoBehaviour
     {
-        if (PlayerPrefs.HasKey("scene_name"))
+        private int _startSceneIndex = 2;
+
+        public void PlayGame()
         {
-            SceneManager.LoadScene(PlayerPrefs.GetString("scene_name"));
-        }
-        else
-        {
-            SceneManager.LoadScene(2);
+            if (PlayerPrefs.HasKey(StringConstValues.SceneName))
+            {
+                SceneManager.LoadScene(PlayerPrefs.GetString(StringConstValues.SceneName));
+            }
+            else
+            {
+                SceneManager.LoadScene(_startSceneIndex);
+            }
         }
     }
 }
+

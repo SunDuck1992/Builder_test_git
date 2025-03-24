@@ -1,44 +1,48 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using PlayerSystem;
 
-public class DestroyZone : MonoBehaviour
+namespace WareHouseSystem
 {
-    [SerializeField] private float _delay;
-    [SerializeField] private SpriteRenderer _triggerZone;
-    [SerializeField] private Color _targetColor;
-
-    private Coroutine _coroutine;
-
-    private void OnTriggerEnter(Collider other)
+    public class DestroyZone : MonoBehaviour
     {
-        if (other.gameObject.TryGetComponent<Player>(out Player player))
-        {
-            _triggerZone.color = _targetColor;
-            _coroutine = StartCoroutine(DestroyMaterial(player.Inventory));
-        }
-    }
+        [SerializeField] private float _delay;
+        [SerializeField] private SpriteRenderer _triggerZone;
+        [SerializeField] private Color _targetColor;
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.TryGetComponent<Player>(out Player player))
-        {
-            _triggerZone.color = Color.white;
+        private Coroutine _coroutine;
 
-            if (_coroutine != null)
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.TryGetComponent<Player>(out Player player))
             {
-                StopCoroutine(_coroutine);
+                _triggerZone.color = _targetColor;
+                _coroutine = StartCoroutine(DestroyMaterial(player.Inventory));
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.TryGetComponent<Player>(out Player player))
+            {
+                _triggerZone.color = Color.white;
+
+                if (_coroutine != null)
+                {
+                    StopCoroutine(_coroutine);
+                }
+            }
+        }
+
+        private IEnumerator DestroyMaterial(Inventory inventory)
+        {
+            while (inventory.CurrentCount > 0)
+            {
+                yield return new WaitForSeconds(_delay);
+
+                inventory.ThrowOutItem();
             }
         }
     }
-
-    private IEnumerator DestroyMaterial(Inventory inventory)
-    {
-        while(inventory.CurrentCount > 0)
-        {
-            yield return new WaitForSeconds(_delay);
-
-            inventory.ThrowOutItem();
-        }
-    }
 }
+

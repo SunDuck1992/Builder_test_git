@@ -1,58 +1,67 @@
-
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using BuildPointSystem;
+using HouseSystem;
+using PlayerSystem;
+using UI.LeaderBoardSystem;
+using ConstValues;
 
-public class EndLevel : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private string[] _sceneNames;
-    [SerializeField] private BuildPoint _buildPoint;
-    [SerializeField] private GameObject _root;
-    [SerializeField] private TextMeshProUGUI _money;
-    [SerializeField] private TextMeshProUGUI _score;
-
-    private ConstructionSite _construction;
-
-    private void Awake()
+    public class EndLevel : MonoBehaviour
     {
-        _buildPoint = FindObjectOfType<BuildPoint>();
-        _buildPoint.OnBuild += Setup;
-        _root.SetActive(false);
-    }
+        [SerializeField] private string[] _sceneNames;
+        [SerializeField] private BuildPoint _buildPoint;
+        [SerializeField] private GameObject _root;
+        [SerializeField] private TextMeshProUGUI _money;
+        [SerializeField] private TextMeshProUGUI _score;
 
-    private void OnDestroy()
-    {
-        _buildPoint.OnBuild -= Setup;
-    }
+        private ConstructionSite _construction;
 
-    public void NextLevel()
-    {
-        LeaderBoard.SetPlayer(UpgradePlayer.Instance.Score);
-        UpgradePlayer.Instance.StatisticMoney = 0;
-        UpgradePlayer.Instance.StatisticScore = 0;
-        PlayerPrefs.DeleteKey("s_money");
-        PlayerPrefs.DeleteKey("s_score");
-        PlayerPrefs.DeleteKey("house");
-        PlayerPrefs.DeleteKey("houseNumber");
-        PlayerPrefs.SetString("needChange", "no");
-        Time.timeScale = 1f;
-        var scene = _sceneNames[Random.Range(0, _sceneNames.Length)];
-        SceneManager.LoadScene(scene);
-        PlayerPrefs.SetString("scene_name", scene);
-    }
+        private void Awake()
+        {
+            _buildPoint = FindObjectOfType<BuildPoint>();
+            _buildPoint.Building += OnSetup;
+            _root.SetActive(false);
+        }
 
-    private void Setup(ConstructionSite constructionSite)
-    {
-        constructionSite.OnCompleteBuild += ShowPanel; 
-        _construction = constructionSite;
-    }
+        private void OnDestroy()
+        {
+            _buildPoint.Building -= OnSetup;
+        }
 
-    private void ShowPanel()
-    {
-        _money.text = UpgradePlayer.Instance.StatisticMoney.ToString();
-        _score.text = UpgradePlayer.Instance.StatisticScore.ToString();
-        Time.timeScale = 0f;
-        _root.SetActive(true);
-        PlayerPrefs.SetString("needChange", "yes");
+        public void NextLevel()
+        {
+            LeaderBoard.SetPlayer(UpgradePlayer.Instance.Score);
+            UpgradePlayer.Instance.StatisticMoney = 0;
+            UpgradePlayer.Instance.StatisticScore = 0;
+            PlayerPrefs.DeleteKey(StringConstValues.StatisticMoney);
+            PlayerPrefs.DeleteKey(StringConstValues.StatisticScore);
+            PlayerPrefs.DeleteKey(StringConstValues.House);
+            PlayerPrefs.DeleteKey(StringConstValues.HouseNumber);
+            PlayerPrefs.SetString(StringConstValues.NeedChange, StringConstValues.NeedChangeNo);
+            Time.timeScale = 1f;
+            var scene = _sceneNames[Random.Range(0, _sceneNames.Length)];
+            SceneManager.LoadScene(scene);
+            PlayerPrefs.SetString(StringConstValues.SceneName, scene);
+        }
+
+        private void OnSetup(ConstructionSite constructionSite)
+        {
+            constructionSite.CompletedBuild += OnShowPanel;
+            _construction = constructionSite;
+        }
+
+        private void OnShowPanel()
+        {
+            _money.text = UpgradePlayer.Instance.StatisticMoney.ToString();
+            _score.text = UpgradePlayer.Instance.StatisticScore.ToString();
+            Time.timeScale = 0f;
+            _root.SetActive(true);
+            PlayerPrefs.SetString(StringConstValues.NeedChange, StringConstValues.NeedChangeYes);
+            _construction.CompletedBuild -= OnShowPanel;
+        }
     }
 }
+

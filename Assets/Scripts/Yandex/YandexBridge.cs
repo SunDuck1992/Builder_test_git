@@ -1,28 +1,32 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Agava.YandexGames;
 using UnityEngine.SceneManagement;
+using ConstValues;
 
-public sealed class YandexBridge : MonoBehaviour
+namespace YandexSystem
 {
-    public static YandexBridge Instance;
+    public sealed class YandexBridge : MonoBehaviour
+    {        
+        public static YandexBridge Instance;
 
-    private void Awake()
-    {
-        YandexGamesSdk.CallbackLogging = true;   
-    }
+        private void Awake()
+        {
+            YandexGamesSdk.CallbackLogging = true;
+        }
 
-    private IEnumerator Start()
-    {
+        private IEnumerator Start()
+        {
 #if !UNITY_WEBGL || UNITY_EDITOR
-        yield break;
+            yield break;
 #endif
-        yield return YandexGamesSdk.Initialize(LoadScene);
-    }
+            yield return YandexGamesSdk.Initialize(LoadScene);
+        }
 
-    private void LoadScene()
-    {
-        SceneManager.LoadScene(1);
+        private void LoadScene()
+        {
+            SceneManager.LoadScene(LoadSceneValues.MainMenuScene);
+        }
     }
 }
+

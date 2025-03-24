@@ -3,23 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeaderBoard : MonoBehaviour
+namespace UI.LeaderBoardSystem
 {
-    private const string LeaderboardName = "LeaderBoard";
-    private const string EnglishCode = "en";
-    private const string RussianCode = "ru";
-    private const string TurkishCode = "tr";
-    private const string AnonymousRu = "Аноним";
-    private const string AnonymousEn = "Anonymous";
-    private const string AnonymousTr = "Anonim";
-
-    [SerializeField] private LeaderBoardView _leaderBoardView;
-
-    private string AnonymousName;
-    private List<LeaderBoardPlayer> _leaderBoardPlayers = new();
-
-    private void Awake()
+    public class LeaderBoard : MonoBehaviour
     {
+        private const string LeaderboardName = "LeaderBoard";
+        private const string EnglishCode = "en";
+        private const string RussianCode = "ru";
+        private const string TurkishCode = "tr";
+        private const string AnonymousRu = "Аноним";
+        private const string AnonymousEn = "Anonymous";
+        private const string AnonymousTr = "Anonim";
+
+        [SerializeField] private LeaderBoardView _leaderBoardView;
+
+        private string AnonymousName;
+        private List<LeaderBoardPlayer> _leaderBoardPlayers = new();
+
+        private void Awake()
+        {
 #if !UNITY_EDITOR
         string languageCode = YandexGamesSdk.Environment.i18n.lang;
 
@@ -39,10 +41,10 @@ public class LeaderBoard : MonoBehaviour
                 break;
         }
 #endif
-    }
+        }
 
-    public static void SetPlayer(int score)
-    {
+        public static void SetPlayer(int score)
+        {
 #if !UNITY_EDITOR
         if (PlayerAccount.IsAuthorized == false)
             return;
@@ -51,11 +53,11 @@ public class LeaderBoard : MonoBehaviour
             Agava.YandexGames.Leaderboard.SetScore(LeaderboardName, score);
         });
 #endif
-    }
+        }
 
-    public void Fill()
-    {
-        _leaderBoardPlayers.Clear();
+        public void Fill()
+        {
+            _leaderBoardPlayers.Clear();
 
 #if !UNITY_EDITOR
         if (PlayerAccount.IsAuthorized == false)
@@ -82,14 +84,15 @@ public class LeaderBoard : MonoBehaviour
             _leaderBoardView.ConstructLeaderboard(_leaderBoardPlayers);
         });
 #endif
-    }
+        }
 
-    private void RequestDataPermission()
-    {
-        if (PlayerAccount.IsAuthorized)
+        private void RequestDataPermission()
         {
-            PlayerAccount.RequestPersonalProfileDataPermission();
-            Debug.Log("Request");
+            if (PlayerAccount.IsAuthorized)
+            {
+                PlayerAccount.RequestPersonalProfileDataPermission();
+            }
         }
     }
 }
+

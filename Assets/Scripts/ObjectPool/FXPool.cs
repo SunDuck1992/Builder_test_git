@@ -1,41 +1,44 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FXPool
+namespace PoolSystem
 {
-    private Dictionary<string, ObjectPool> _pools = new();
-
-    public FXPool(FXResourses resourses)
+    public class FXPool
     {
-        resourses.ForEach(SetUpPool);
-    }
+        private Dictionary<string, ObjectPool> _pools = new();
 
-    public ParticleSystem Spawn(FXType type)
-    {
-        if (_pools.TryGetValue(type.ToString(), out ObjectPool pool))
+        public FXPool(FXResourses resourses)
         {
-            var result = pool.Spawn();
-            result.name = type.ToString();
-            return result.GetComponent<ParticleSystem>();
+            resourses.ForEach(SetUpPool);
         }
-        return null;
-    }
 
-    public void Despawn(ParticleSystem particle)
-    {
-        if (_pools.TryGetValue(particle.name, out ObjectPool pool))
+        public ParticleSystem Spawn(FXType type)
         {
-            pool.DeSpawn(particle.gameObject);
+            if (_pools.TryGetValue(type.ToString(), out ObjectPool pool))
+            {
+                var result = pool.Spawn();
+                result.name = type.ToString();
+                return result.GetComponent<ParticleSystem>();
+            }
+            return null;
         }
-    }
 
-    private void SetUpPool(FXType type, ParticleSystem particle)
-    {
-        if (!_pools.TryGetValue(type.ToString(), out ObjectPool pool))
+        public void Despawn(ParticleSystem particle)
         {
-            pool = new(particle.gameObject);
-            _pools.Add(type.ToString(), pool);
+            if (_pools.TryGetValue(particle.name, out ObjectPool pool))
+            {
+                pool.DeSpawn(particle.gameObject);
+            }
+        }
+
+        private void SetUpPool(FXType type, ParticleSystem particle)
+        {
+            if (!_pools.TryGetValue(type.ToString(), out ObjectPool pool))
+            {
+                pool = new(particle.gameObject);
+                _pools.Add(type.ToString(), pool);
+            }
         }
     }
 }
+

@@ -1,49 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolService
+namespace PoolSystem
 {
-    private static PoolService _instance;
-    private Dictionary<string, ObjectPool> _pools; 
-    private PoolService()
+    public class PoolService
     {
-        _pools = new Dictionary<string, ObjectPool>();
-    }
-
-    public static PoolService Instance
-    {
-        get
+        private static PoolService _instance;
+        private Dictionary<string, ObjectPool> _pools;
+        private PoolService()
         {
-            if (_instance == null)
+            _pools = new Dictionary<string, ObjectPool>();
+        }
+
+        public static PoolService Instance
+        {
+            get
             {
-                _instance = new PoolService();
+                if (_instance == null)
+                {
+                    _instance = new PoolService();
+                }
+
+                return _instance;
             }
-            return _instance;
         }
-    }
 
-    public FXPool FxPool { get; set; }
-    public VolumeFXPool VolumeFXPool { get; set; }
+        public FXPool FxPool { get; set; }
+        public VolumeFXPool VolumeFXPool { get; set; }
 
-    public void AddPool(GameObject prefab)
-    {
-        _pools[prefab.name] = new ObjectPool(prefab);
-    }
-
-    public ObjectPool GetPool(GameObject prefab)
-    {
-        if(_pools.TryGetValue(prefab.name, out ObjectPool pool))
+        public void AddPool(GameObject prefab)
         {
-            return pool;
+            _pools[prefab.name] = new ObjectPool(prefab);
         }
-        else
+
+        public ObjectPool GetPool(GameObject prefab)
         {
-            AddPool(prefab);
-            return _pools[prefab.name];
-        }         
+            if (_pools.TryGetValue(prefab.name, out ObjectPool pool))
+            {
+                return pool;
+            }
+            else
+            {
+                AddPool(prefab);
+                return _pools[prefab.name];
+            }
+        }
     }
 }
+

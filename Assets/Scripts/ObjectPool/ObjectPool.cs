@@ -1,39 +1,42 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool
+namespace PoolSystem
 {
-    private LinkedList<GameObject> _pool = new();
-    private GameObject _prefab;
-    private Transform _container;
-
-    public ObjectPool(GameObject prefab)
+    public class ObjectPool
     {
-        _prefab = prefab;
-        _container = new GameObject().transform;
-        MonoBehaviour.DontDestroyOnLoad(_container);
-    }
+        private LinkedList<GameObject> _pool = new();
+        private GameObject _prefab;
+        private Transform _container;
 
-    public GameObject Spawn()
-    {
-        if(_pool.Count > 0)
+        public ObjectPool(GameObject prefab)
         {
-            GameObject item = _pool.Last.Value;
-            item.SetActive(true);
-            _pool.RemoveLast();
-            return item;
+            _prefab = prefab;
+            _container = new GameObject().transform;
+            MonoBehaviour.DontDestroyOnLoad(_container);
         }
 
-        var result = MonoBehaviour.Instantiate(_prefab);
-        result.name = _prefab.name;
-        return result;
-    }
+        public GameObject Spawn()
+        {
+            if (_pool.Count > 0)
+            {
+                GameObject item = _pool.Last.Value;
+                item.SetActive(true);
+                _pool.RemoveLast();
+                return item;
+            }
 
-    public void DeSpawn(GameObject prefab)
-    {
-        _pool.AddLast(prefab);
-        prefab.SetActive(false);
-        prefab.transform.SetParent(_container);
+            var result = MonoBehaviour.Instantiate(_prefab);
+            result.name = _prefab.name;
+            return result;
+        }
+
+        public void DeSpawn(GameObject prefab)
+        {
+            _pool.AddLast(prefab);
+            prefab.SetActive(false);
+            prefab.transform.SetParent(_container);
+        }
     }
 }
+

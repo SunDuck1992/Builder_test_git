@@ -1,67 +1,65 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using WareHouseSystem;
 
-public class StageInfo
+namespace HouseSystem
 {
-    private Dictionary<Materials, MaterialInfo> _infoes = new();
-    private List<Materials> _stageMaterials = new();
-
-    public IReadOnlyList<Materials> StageMaterials => _stageMaterials;
-
-    public(int max, int current) GetCountInfo(Materials material)
+    public class StageInfo
     {
-        var materialInfo = _infoes[material];
-        return (materialInfo.maxCount, materialInfo.currentCount);
-    }
+        private Dictionary<Materials, MaterialInfo> _infoes = new();
+        private List<Materials> _stageMaterials = new();
 
-    public void AddMaterial(BuildMaterial buildMaterial, bool isLoad)
-    {
-        if (!_infoes.TryGetValue(buildMaterial.Materials, out var info))
+        public IReadOnlyList<Materials> StageMaterials => _stageMaterials;
+
+        public (int max, int current) GetCountInfo(Materials material)
         {
-            info = new();
-            _infoes.Add(buildMaterial.Materials, info);
+            var materialInfo = _infoes[material];
+            return (materialInfo.maxCount, materialInfo.currentCount);
         }
 
-        if (isLoad)
+        public void AddMaterial(BuildMaterial buildMaterial, bool isLoad)
         {
-            buildMaterial.GetComponent<MeshRenderer>().enabled = true;
-            info.currentCount++;
-        }
-        else
-        {
-            if (!_stageMaterials.Contains(buildMaterial.Materials))
+            if (!_infoes.TryGetValue(buildMaterial.Materials, out var info))
             {
-                _stageMaterials.Add(buildMaterial.Materials);
+                info = new();
+                _infoes.Add(buildMaterial.Materials, info);
             }
 
-            info.materialCells.Enqueue(buildMaterial);
-        }
-
-        info.maxCount++;
-    }
-
-    public BuildMaterial GetMaterial(Materials material)
-    {
-        if (_infoes.TryGetValue(material, out var info))
-        {
-            var element = info.materialCells.Dequeue();
-            info.currentCount++;
-
-            if (info.materialCells.Count <= 0)
+            if (isLoad)
             {
-                _stageMaterials.Remove(material);
+                buildMaterial.GetComponent<MeshRenderer>().enabled = true;
+                info.currentCount++;
+            }
+            else
+            {
+                if (!_stageMaterials.Contains(buildMaterial.Materials))
+                {
+                    _stageMaterials.Add(buildMaterial.Materials);
+                }
+
+                info.materialCells.Enqueue(buildMaterial);
             }
 
-            return element;
+            info.maxCount++;
         }
 
-        return null;
-    }
+        public BuildMaterial GetMaterial(Materials material)
+        {
+            if (_infoes.TryGetValue(material, out var info))
+            {
+                var element = info.materialCells.Dequeue();
+                info.currentCount++;
 
-    private class MaterialInfo
-    {
-        public Queue<BuildMaterial> materialCells = new();
-        public int currentCount;
-        public int maxCount;
+                if (info.materialCells.Count <= 0)
+                {
+                    _stageMaterials.Remove(material);
+                }
+
+                return element;
+            }
+
+            return null;
+        }
     }
 }
+

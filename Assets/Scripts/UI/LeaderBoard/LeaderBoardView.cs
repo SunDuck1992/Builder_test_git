@@ -1,34 +1,37 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeaderBoardView : MonoBehaviour
+namespace UI.LeaderBoardSystem
 {
-    [SerializeField] private Transform _container;
-    [SerializeField] private LeaderBoardElement _leaderboardElementPrefab;
-
-    private List<LeaderBoardElement> _elements = new();
-
-    public void ConstructLeaderboard(List<LeaderBoardPlayer> leaderBoardPlayers)
+    public class LeaderBoardView : MonoBehaviour
     {
-        ClearLeaderboard();
+        [SerializeField] private Transform _container;
+        [SerializeField] private LeaderBoardElement _leaderboardElementPrefab;
 
-        foreach (LeaderBoardPlayer player in leaderBoardPlayers)
+        private List<LeaderBoardElement> _elements = new();
+
+        public void ConstructLeaderboard(List<LeaderBoardPlayer> leaderBoardPlayers)
         {
-            LeaderBoardElement leaderboardElementInstance = Instantiate(_leaderboardElementPrefab, _container);
-            leaderboardElementInstance.Initialize(player.Name, player.Rank, player.Score);
+            ClearLeaderboard();
 
-            _elements.Add(leaderboardElementInstance);
-        }
-    }
+            foreach (LeaderBoardPlayer player in leaderBoardPlayers)
+            {
+                LeaderBoardElement leaderboardElementInstance = Instantiate(_leaderboardElementPrefab, _container);
+                leaderboardElementInstance.Initialize(player.Name, player.Rank, player.Score);
 
-    private void ClearLeaderboard()
-    {
-        foreach (var element in _elements)
-        {
-            Destroy(element.gameObject);
+                _elements.Add(leaderboardElementInstance);
+            }
         }
 
-        _elements = new List<LeaderBoardElement>();
+        private void ClearLeaderboard()
+        {
+            foreach (var element in _elements)
+            {
+                Destroy(element.gameObject);
+            }
+
+            _elements = new List<LeaderBoardElement>();
+        }
     }
 }
+

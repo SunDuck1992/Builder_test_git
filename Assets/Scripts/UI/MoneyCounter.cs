@@ -1,34 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using PlayerSystem;
 
-public class MoneyCounter : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private TextMeshProUGUI _moneyText;
-    [SerializeField] private TextMeshProUGUI _scoreText;
-
-    private void Start()
+    public class MoneyCounter : MonoBehaviour
     {
-        UpgradePlayer.Instance.OnChangeMoney += ShowMoney;
-        UpgradePlayer.Instance.OnchangeScore += ShowScore;
+        [SerializeField] private TextMeshProUGUI _moneyText;
+        [SerializeField] private TextMeshProUGUI _scoreText;
 
-        UpgradePlayer.Instance.Refresh();
-    }
+        private void Start()
+        {
+            UpgradePlayer.Instance.ChangedMoney += OnShowMoney;
+            UpgradePlayer.Instance.ChangedScore += OnShowScore;
 
-    private void OnDestroy()
-    {
-        UpgradePlayer.Instance.OnChangeMoney -= ShowMoney;
-        UpgradePlayer.Instance.OnchangeScore -= ShowScore;
-    }
+            UpgradePlayer.Instance.Refresh();
+        }
 
-    private void ShowMoney(int money)
-    {
-        _moneyText.text = money.ToString();
-    }
+        private void OnDestroy()
+        {
+            UpgradePlayer.Instance.ChangedMoney -= OnShowMoney;
+            UpgradePlayer.Instance.ChangedScore -= OnShowScore;
+        }
 
-    private void ShowScore(int score)
-    {
-        _scoreText.text = score.ToString();
+        private void OnShowMoney(int money)
+        {
+            _moneyText.text = money.ToString();
+        }
+
+        private void OnShowScore(int score)
+        {
+            _scoreText.text = score.ToString();
+        }
     }
 }
+

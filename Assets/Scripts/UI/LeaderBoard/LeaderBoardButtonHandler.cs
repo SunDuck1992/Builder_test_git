@@ -1,17 +1,17 @@
 using Agava.YandexGames;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class LeaderBoardButtonHandler : MonoBehaviour
+namespace UI.LeaderBoardSystem
 {
-    [SerializeField] private GameObject _leaderboardWindow;
-    [SerializeField] private GameObject _authorizationWindow;
-
-    [SerializeField] private LeaderBoard _leaderBoard;
-
-    public void OnButtonClick()
+    public class LeaderBoardButtonHandler : MonoBehaviour
     {
+        [SerializeField] private GameObject _leaderboardWindow;
+        [SerializeField] private GameObject _authorizationWindow;
+
+        [SerializeField] private LeaderBoard _leaderBoard;
+
+        public void OnButtonClick()
+        {
 #if !UNITY_EDITOR
         if(PlayerAccount.IsAuthorized == false)
         {
@@ -23,5 +23,7 @@ public class LeaderBoardButtonHandler : MonoBehaviour
             _leaderBoard.Fill();
         }
 #endif
+        }
     }
 }
+

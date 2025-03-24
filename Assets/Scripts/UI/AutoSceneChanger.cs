@@ -1,19 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using ConstValues;
 
-public class AutoSceneChanger : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private EndLevel _endLevel;
-
-    private const string NeedChange = "yes";
-
-    private void Awake()
+    public class AutoSceneChanger : MonoBehaviour
     {
-        if(PlayerPrefs.GetString("needChange") == NeedChange)
+        [SerializeField] private EndLevel _endLevel;
+
+        private const string NeedChange = StringConstValues.NeedChangeYes;
+
+        private void Awake()
         {
-            _endLevel.NextLevel();
+            if (PlayerPrefs.GetString(StringConstValues.NeedChange) == NeedChange)
+            {
+                _endLevel.NextLevel();
+            }
         }
     }
-
 }
+

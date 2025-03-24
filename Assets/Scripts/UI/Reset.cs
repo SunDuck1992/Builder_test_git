@@ -1,13 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using ConstValues;
 
-public class Reset : MonoBehaviour
+namespace UI
 {
-    public void ReLoad(int scene)
+    public class Reset : MonoBehaviour
     {
-        SceneManager.LoadScene(scene);
-        PlayerPrefs.DeleteKey("house");
+        public void ReLoad(int scene)
+        {
+            SceneManager.LoadScene(scene);
+            PlayerPrefs.DeleteKey(StringConstValues.House);
+        }
     }
 }
+

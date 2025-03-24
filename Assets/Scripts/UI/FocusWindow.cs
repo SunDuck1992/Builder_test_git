@@ -1,58 +1,54 @@
-using System.Collections;
-using System.Collections.Generic;
+using ConstValues;
 using UnityEngine;
-using Agava.YandexGames;
-
+using YandexSystem;
 using PlayerPrefs = UnityEngine.PlayerPrefs;
 
-public class FocusWindow : MonoBehaviour
+namespace UI
 {
-    private void OnEnable()
+    public class FocusWindow : MonoBehaviour
     {
-        Application.focusChanged += OnInBackgroundChangeApp;
-    }
-
-    private void OnDisable()
-    {
-        Application.focusChanged -= OnInBackgroundChangeApp;
-    }
-
-    private void OnInBackgroundChangeApp(bool inApp)
-    {
-        if (!VideoAd.IsAdsPlayed)
+        private void OnEnable()
         {
-            MuteAudio(inApp);
-            PauseGame(!inApp);
+            Application.focusChanged += OnInBackgroundChangeApp;
         }
-    }
 
-    private void OnInBackgroundChangeWeb(bool isBackground)
-    {
-        MuteAudio(isBackground);
-        PauseGame(isBackground);
-    }
-
-    private void MuteAudio(bool value)
-    {
-        if (value)
+        private void OnDisable()
         {
-            if (VideoAd.IsAdsPlayed)
+            Application.focusChanged -= OnInBackgroundChangeApp;
+        }
+
+        private void OnInBackgroundChangeApp(bool inApp)
+        {
+            if (!VideoAdd.IsAdvertismetPlayed)
             {
-                AudioListener.volume = 0;
+                MuteAudio(inApp);
+                PauseGame(!inApp);
+            }
+        }
+
+        private void MuteAudio(bool value)
+        {
+            if (value)
+            {
+                if (VideoAdd.IsAdvertismetPlayed)
+                {
+                    AudioListener.volume = 0;
+                }
+                else
+                {
+                    AudioListener.volume = PlayerPrefs.GetInt(StringConstValues.VolumeMusic, 1);
+                }
             }
             else
             {
-                AudioListener.volume = PlayerPrefs.GetInt("volumeMusic", 1);
+                AudioListener.volume = 0;
             }
         }
-        else
+
+        private void PauseGame(bool value)
         {
-            AudioListener.volume = 0;
+            Time.timeScale = value ? 0 : 1;
         }
     }
-
-    private void PauseGame(bool value)
-    {
-        Time.timeScale = value ? 0 : 1;
-    }
 }
+

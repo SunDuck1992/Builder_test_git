@@ -1,21 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CoordinateFromCamera : MonoBehaviour
+namespace PlayerSystem
 {
-    [SerializeField] private Player _player;
-
-    private Vector3 _offset;
-
-    private void Start()
+    public class CoordinateFromCamera : MonoBehaviour
     {
-        _offset = _player.transform.position - transform.position;
-    }
+        [SerializeField] private Player _player;
 
+        private Vector3 _offset;
 
-    void LateUpdate()
-    {
-        transform.position = _player.transform.position - _offset;
+        private void Start()
+        {
+            _offset = _player.transform.position - transform.position;
+        }
+
+        void LateUpdate()
+        {
+            transform.position = _player.transform.position - _offset;
+        }
     }
 }
+

@@ -1,12 +1,14 @@
 using Agava.YandexGames;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GameReadyStarter : MonoBehaviour
+namespace YandexSystem
 {
-    private void Start()
+    public class GameReadyStarter : MonoBehaviour
     {
-        YandexGamesSdk.GameReady();
+        private void Start()
+        {
+            YandexGamesSdk.GameReady();
+        }
     }
 }
+

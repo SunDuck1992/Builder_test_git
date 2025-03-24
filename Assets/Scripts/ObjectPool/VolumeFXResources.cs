@@ -1,47 +1,22 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum VolumeFXType
+namespace PoolSystem
 {
-    None,
-    TakeBlock,
-    InstallBlock,
-    ThrowOutTrash,
-    PurchaseImprovment,
-    BuildComplete
-}
+    [CreateAssetMenu(fileName = nameof(VolumeFXResources), menuName = "Data/" + nameof(VolumeFXResources))]
 
-[CreateAssetMenu(fileName = nameof(VolumeFXResources), menuName = "Data/" + nameof(VolumeFXResources))]
-
-public class VolumeFXResources : ScriptableObject
-{
-
-    [SerializeField] private List<Data> _datas;
-    [SerializeField] private AudioSource _audioSourcePrefab;
-
-    public AudioSource AudioSource => _audioSourcePrefab;
-
-    public AudioClip GetFX(VolumeFXType fX)
+    public partial class VolumeFXResources : ScriptableObject
     {
-        var result = _datas.Find(x => x.type == fX);
-        return result.clip;
-    }
 
-    public void ForEach(Action<VolumeFXType, AudioClip> action)
-    {
-        _datas.ForEach(x => action?.Invoke(x.type, x.clip));
-    }
+        [SerializeField] private List<VolumeData> _datas;
+        [SerializeField] private AudioSource _audioSourcePrefab;
 
-    [Serializable]
-    private struct Data
-    {
-        public VolumeFXType type;
-        public AudioClip clip;
+        public AudioSource AudioSource => _audioSourcePrefab;
+
+        public AudioClip GetFX(VolumeFXType fX)
+        {
+            var result = _datas.Find(x => x.type == fX);
+            return result.clip;
+        }
     }
 }
-
-
-
-

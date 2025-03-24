@@ -1,15 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using ConstValues;
 
-public class StudyPanel : MonoBehaviour
+namespace UI
 {
-    private void Awake()
+    public class StudyPanel : MonoBehaviour
     {
-        if (PlayerPrefs.HasKey("startHouse"))
+        private void Awake()
         {
-            gameObject.SetActive(false);
+            if (PlayerPrefs.HasKey(StringConstValues.StartHouse))
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }
+

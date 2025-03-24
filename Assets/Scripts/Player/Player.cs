@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Inventory))]
-[RequireComponent(typeof(PlayerMovement))]
-
-public class Player : MonoBehaviour
+namespace PlayerSystem
 {
-    private Inventory _inventory;
+    [RequireComponent(typeof(Inventory))]
+    [RequireComponent(typeof(PlayerMovement))]
 
-    public Inventory Inventory => _inventory;
-
-    private void Start()
+    public class Player : MonoBehaviour
     {
-        _inventory = GetComponent<Inventory>();
+        private Inventory _inventory;
+
+        public Inventory Inventory => _inventory;
+
+        private void Start()
+        {
+            _inventory = GetComponent<Inventory>();
+        }
     }
 }
+
+

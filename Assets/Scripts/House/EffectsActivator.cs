@@ -1,27 +1,30 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EffectsActivator : MonoBehaviour
+namespace HouseSystem
 {
-    [SerializeField] private House _house;
-    [SerializeField] private List<ParticleSystem> _particles;
-
-    private void OnEnable()
+    public class EffectsActivator : MonoBehaviour
     {
-       _house.OnCompleteHouse += Activate;
-    }
+        [SerializeField] private House _house;
+        [SerializeField] private List<ParticleSystem> _particles;
 
-    private void OnDisable()
-    {
-        _house.OnCompleteHouse -= Activate;
-    }
-
-    private void Activate()
-    {
-        foreach (var particle in _particles)
+        private void OnEnable()
         {
-            particle.Play();
+            _house.CompletedHouse += OnActivate;
+        }
+
+        private void OnDisable()
+        {
+            _house.CompletedHouse -= OnActivate;
+        }
+
+        private void OnActivate()
+        {
+            foreach (var particle in _particles)
+            {
+                particle.Play();
+            }
         }
     }
 }
+

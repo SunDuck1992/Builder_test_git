@@ -1,115 +1,89 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using PoolSystem;
+using HouseSystem;
+using PlayerSystem;
 
-public enum Materials
+namespace WareHouseSystem
 {
-    None = 0,
-    Brick,
-    Board,
-    Roof
-}
-
-public class BuildMaterial : MonoBehaviour
-{
-    [SerializeField] private Materials _materials;
-    [SerializeField] private int _reward;
-
-    public Materials Materials => _materials;
-
-    private void OnDisable()
+    public class BuildMaterial : MonoBehaviour
     {
-        StopAllCoroutines();
-    }
+        [SerializeField] private Materials _materials;
+        [SerializeField] private int _reward;
 
-    private void OnDestroy()
-    {
-        StopAllCoroutines();
-    }
+        public Materials Materials => _materials;
 
-    public void PutBrick(Transform target, float speed)
-    {
-        StartCoroutine(PutToPosition(target, speed));
-    }
-
-    public void PayReward()
-    {
-        UpgradePlayer.Instance.ChangeMoney(_reward * UpgradePlayer.Instance.MultiplieMoney);
-        UpgradePlayer.Instance.AddScore();
-    }
-
-    private IEnumerator PutToPosition(Transform target, float speed)
-    {
-        bool flag = true;
-        float multiplie = 2f;
-        Vector3 scale = target.localScale;
-
-        while (flag)
+        private void OnDisable()
         {
-            target.position = Vector3.Lerp(target.position, transform.parent.position, speed * Time.deltaTime);
-            target.localScale = Vector3.Lerp(target.localScale, transform.parent.localScale, speed * Time.deltaTime);
-            target.rotation = Quaternion.Lerp(target.rotation, transform.parent.rotation, speed * multiplie * Time.deltaTime);
-
-            float distance = Vector3.Distance(target.position, transform.parent.position);
-            float rotation = Quaternion.Angle(target.rotation, transform.parent.rotation);
-
-            if(distance <= 0.1f & rotation < 1f)
-            {
-                target.position = transform.parent.position;
-                target.localScale = transform.parent.localScale;
-                target.rotation = transform.parent.rotation;
-
-                flag = false;
-            }
-
-            yield return null;
+            StopAllCoroutines();
         }
 
-        var fx = PoolService.Instance.FxPool.Spawn(FXType.PutBlock);
-        fx.transform.position = transform.parent.position;
-        StartCoroutine(FxPlay(fx.GetComponent<ParticleSystem>()));
-
-        PoolService.Instance.GetPool(target.gameObject).DeSpawn(target.gameObject);
-        target.localScale = scale;
-        GetComponent<MeshRenderer>().enabled = true;
-        PayReward();
-    }
-
-    private IEnumerator FxPlay(ParticleSystem particle)
-    {
-        while (true)
+        private void OnDestroy()
         {
-            yield return null;
-
-            if (!particle.isPlaying)
-            {
-                PoolService.Instance.FxPool.Despawn(particle);
-                break;
-            }
+            StopAllCoroutines();
         }
-    }
 
-    [ContextMenu("SetReward")]
-    public void ShowBricks()
-    {
-        var house = transform.GetComponentInParent<House>();
-        var buildMaterials = house.GetComponentsInChildren<BuildMaterial>();
-       
-
-        for (int i = 0; i < buildMaterials.Length; i++)
+        public void PutBrick(Transform target, float speed)
         {
-            switch (buildMaterials[i].Materials)
+            StartCoroutine(PutToPosition(target, speed));
+        }
+
+        public void PayReward()
+        {
+            UpgradePlayer.Instance.ChangeMoney(_reward * UpgradePlayer.Instance.LevelMoney);
+            UpgradePlayer.Instance.AddScore();
+        }
+
+        private IEnumerator PutToPosition(Transform target, float speed)
+        {
+            bool flag = true;
+            float multiplie = 2f;
+            Vector3 scale = target.localScale;
+
+            while (flag)
             {
-                case Materials.Brick:
-                    buildMaterials[i]._reward = 10;
+                target.position = Vector3.Lerp(target.position, transform.parent.position, speed * Time.deltaTime);
+                target.localScale = Vector3.Lerp(target.localScale, transform.parent.localScale, speed * Time.deltaTime);
+                target.rotation = Quaternion.Lerp(target.rotation, transform.parent.rotation, speed * multiplie * Time.deltaTime);
+
+                float distance = Vector3.Distance(target.position, transform.parent.position);
+                float rotation = Quaternion.Angle(target.rotation, transform.parent.rotation);
+
+                if (distance <= 0.1f & rotation < 1f)
+                {
+                    target.position = transform.parent.position;
+                    target.localScale = transform.parent.localScale;
+                    target.rotation = transform.parent.rotation;
+
+                    flag = false;
+                }
+
+                yield return null;
+            }
+
+            var fx = PoolService.Instance.FxPool.Spawn(FXType.PutBlock);
+            fx.transform.position = transform.parent.position;
+            StartCoroutine(FxPlay(fx.GetComponent<ParticleSystem>()));
+
+            PoolService.Instance.GetPool(target.gameObject).DeSpawn(target.gameObject);
+            target.localScale = scale;
+            GetComponent<MeshRenderer>().enabled = true;
+            PayReward();
+        }
+
+        private IEnumerator FxPlay(ParticleSystem particle)
+        {
+            while (particle.isPlaying)
+            {
+                yield return null;
+
+                if (!particle.isPlaying)
+                {
+                    PoolService.Instance.FxPool.Despawn(particle);
                     break;
-                case Materials.Board:
-                    buildMaterials[i]._reward = 10;
-                    break;
-                case Materials.Roof:
-                    buildMaterials[i]._reward = 10;
-                    break;
+                }
             }
         }
     }
 }
+

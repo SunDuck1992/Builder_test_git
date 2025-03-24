@@ -1,19 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using WareHouseSystem;
 
-public class BuildProgress : MonoBehaviour
+namespace UI
 {
-    private const string Template = "{0} / {1}";
-    [SerializeField] private TextMeshProUGUI _progressText;  
-    [SerializeField] private Materials _materials;
-
-    public Materials Materials => _materials;
-
-    public void ShowProgress(int currentCount, int maxCount)
+    public class BuildProgress : MonoBehaviour
     {
-        _progressText.text = string.Format(Template, currentCount, maxCount);
+        private const string Template = "{0} / {1}";
+
+        [SerializeField] private TextMeshProUGUI _progressText;
+        [SerializeField] private Materials _materials;
+
+        public Materials Materials => _materials;
+
+        public void ShowProgress(int currentCount, int maxCount)
+        {
+            _progressText.text = string.Format(Template, currentCount, maxCount);
+        }
     }
 }
+

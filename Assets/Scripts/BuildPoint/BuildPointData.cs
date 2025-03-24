@@ -1,19 +1,19 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using HouseSystem;
 
-[CreateAssetMenu(fileName = nameof(BuildPointData), menuName = "Data/" + nameof(BuildPointData))]
-
-public class BuildPointData : ScriptableObject
+namespace BuildPointSystem
 {
-    [SerializeField] private List<House> _housePrefabs;
-    [SerializeField] private House _startHouse;
-    
-    public IReadOnlyList<House> HousePrefabs => _housePrefabs;
-    public House StartHouse => _startHouse;
+    [CreateAssetMenu(fileName = nameof(BuildPointData), menuName = "Data/" + nameof(BuildPointData))]
 
-    public void RemoveHouse(House house)
+    public class BuildPointData : ScriptableObject
     {
-        _housePrefabs.Remove(house);
+        [SerializeField] private List<House> _housePrefabs;
+        [SerializeField] private House _startHouse;
+
+        public IReadOnlyList<House> HousePrefabs => _housePrefabs;
+        public House StartHouse => _startHouse;
     }
 }
+
+
