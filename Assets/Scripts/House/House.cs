@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AutoSaveSystem;
+using ConstValues;
 using PoolSystem;
 using WareHouseSystem;
-using ConstValues;
 
 namespace HouseSystem
 {
@@ -40,7 +40,7 @@ namespace HouseSystem
             else
             {
                 _saveData = JsonUtility.FromJson<HouseProgress>(json);
-                CurrentStage = _saveData.currentStage;
+                CurrentStage = _saveData.CurrentStage;
             }
 
             for (int i = CurrentStage; i > 0; i--)
@@ -83,31 +83,11 @@ namespace HouseSystem
         public void NextStage()
         {
             CurrentStage++;
-            _saveData.currentStage = CurrentStage;
+            _saveData.SetCurrentStage(CurrentStage);
             string json = JsonUtility.ToJson(_saveData);
             PlayerPrefs.SetString(StringConstValues.House, json);
 
             ActivateEventObjects(CurrentStage, false);
-        }
-
-        private void ActivateEventObjects(int stage, bool isLoad)
-        {
-            var data = _stageEventObjects.Find(x => x.stageNumber == stage);
-
-            if (data != null)
-            {
-                if (!isLoad)
-                {
-                    data.eventObject.SetActive(true);
-
-                    foreach (ParticleSystem particle in data.effects)
-                    {
-                        particle.Play();
-                    }
-                }
-
-                data.eventObject.SetActive(true);
-            }
         }
 
         public void BuildElement(Transform target, float speed, Materials materials)
@@ -143,29 +123,6 @@ namespace HouseSystem
             return result;
         }
 
-        private IEnumerator VolumeFxPlay(AudioSource audioSource)
-        {
-            while (audioSource.isPlaying)
-            {
-                yield return null;
-
-                if (!audioSource.isPlaying)
-                {
-                    PoolService.Instance.VolumeFXPool.Despawn(audioSource);
-                    break;
-                }
-            }
-        }
-
-        private IEnumerator CompleteHouse(Action callback)
-        {
-            yield return new WaitForSeconds(_delay);
-            PlayerPrefs.SetInt(StringConstValues.StartHouse, _startHouseIndex);
-            callback?.Invoke();
-        }
-
-
-
         [ContextMenu("Hide")]
         public void HideBricks()
         {
@@ -187,7 +144,46 @@ namespace HouseSystem
                 buildMaterials[i].GetComponent<MeshRenderer>().enabled = true;
             }
         }
+
+        private void ActivateEventObjects(int stage, bool isLoad)
+        {
+            var data = _stageEventObjects.Find(x => x.StageNumber == stage);
+
+            if (data != null)
+            {
+                if (!isLoad)
+                {
+                    data.EventObject.SetActive(true);
+
+                    foreach (ParticleSystem particle in data.Effects)
+                    {
+                        particle.Play();
+                    }
+                }
+
+                data.EventObject.SetActive(true);
+            }
+        }
+
+        private IEnumerator VolumeFxPlay(AudioSource audioSource)
+        {
+            while (audioSource.isPlaying)
+            {
+                yield return null;
+
+                if (!audioSource.isPlaying)
+                {
+                    PoolService.Instance.VolumeFXPool.Despawn(audioSource);
+                    break;
+                }
+            }
+        }
+
+        private IEnumerator CompleteHouse(Action callback)
+        {
+            yield return new WaitForSeconds(_delay);
+            PlayerPrefs.SetInt(StringConstValues.StartHouse, _startHouseIndex);
+            callback?.Invoke();
+        }       
     }
 }
-
-

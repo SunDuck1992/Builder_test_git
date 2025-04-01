@@ -1,9 +1,9 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using PoolSystem;
 using PlayerSystem;
+using PoolSystem;
 
 namespace UI
 {
@@ -23,7 +23,7 @@ namespace UI
             {
                 UpgradePlayer.Instance.ApplayUpgrade(_upgrade, _cost);
 
-                if (UpgradePlayer.Instance.isPay)
+                if (UpgradePlayer.Instance.IsPay)
                 {
                     var volumeFX = PoolService.Instance.VolumeFXPool.Spawn(VolumeFXType.PurchaseImprovment);
                     StartCoroutine(VolumeFxPlay(volumeFX));
@@ -53,7 +53,6 @@ namespace UI
                 case Upgrade.Cost:
                     _text.text = ChangeCost(UpgradePlayer.Instance.UpgradeMoneyLevel).ToString();
                     break;
-
             }
         }
 
@@ -78,4 +77,3 @@ namespace UI
         }
     }
 }
-

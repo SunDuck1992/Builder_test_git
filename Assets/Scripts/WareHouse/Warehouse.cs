@@ -1,6 +1,6 @@
-using PlayerSystem;
 using System.Collections;
 using UnityEngine;
+using PlayerSystem;
 using PoolSystem;
 
 namespace WareHouseSystem
@@ -50,4 +50,3 @@ namespace WareHouseSystem
         }
     }
 }
-

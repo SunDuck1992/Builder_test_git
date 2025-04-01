@@ -20,4 +20,3 @@ namespace ConstValues
         public const string IsClick = "isClick";
     }
 }
-

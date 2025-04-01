@@ -20,6 +20,7 @@ namespace PoolSystem
                 result.name = type.ToString();
                 return result.GetComponent<ParticleSystem>();
             }
+
             return null;
         }
 
@@ -41,4 +42,3 @@ namespace PoolSystem
         }
     }
 }
-

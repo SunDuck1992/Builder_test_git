@@ -7,10 +7,6 @@ namespace PoolSystem
     {
         private static PoolService _instance;
         private Dictionary<string, ObjectPool> _pools;
-        private PoolService()
-        {
-            _pools = new Dictionary<string, ObjectPool>();
-        }
 
         public static PoolService Instance
         {
@@ -23,6 +19,11 @@ namespace PoolSystem
 
                 return _instance;
             }
+        }
+
+        private PoolService()
+        {
+            _pools = new Dictionary<string, ObjectPool>();
         }
 
         public FXPool FxPool { get; set; }
@@ -47,4 +48,3 @@ namespace PoolSystem
         }
     }
 }
-

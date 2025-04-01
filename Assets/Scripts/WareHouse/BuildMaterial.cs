@@ -1,8 +1,7 @@
 using System.Collections;
 using UnityEngine;
-using PoolSystem;
-using HouseSystem;
 using PlayerSystem;
+using PoolSystem;
 
 namespace WareHouseSystem
 {
@@ -86,4 +85,3 @@ namespace WareHouseSystem
         }
     }
 }
-

@@ -13,10 +13,9 @@ namespace PlayerSystem
             _offset = _player.transform.position - transform.position;
         }
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             transform.position = _player.transform.position - _offset;
         }
     }
 }
-

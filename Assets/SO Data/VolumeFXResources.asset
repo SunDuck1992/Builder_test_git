@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: VolumeFXResources
   m_EditorClassIdentifier: 
   _datas:
-  - type: 1
-    clip: {fileID: 8300000, guid: 65cfaeb7c6e0a1b42ba8a82ba0d438c9, type: 3}
-  - type: 2
-    clip: {fileID: 8300000, guid: 6ca0ffd9a709d324e955ff2d30a24fca, type: 3}
-  - type: 3
-    clip: {fileID: 8300000, guid: d07cfeba771f1c3468412b6d1e6230b7, type: 3}
-  - type: 4
-    clip: {fileID: 8300000, guid: 45e52101819d5254d8b072c178bd0a03, type: 3}
-  - type: 5
-    clip: {fileID: 8300000, guid: 1ce0dc6cfb0673f4fb1a1fb3d28a3fc4, type: 3}
+  - _type: 1
+    _clip: {fileID: 8300000, guid: 65cfaeb7c6e0a1b42ba8a82ba0d438c9, type: 3}
+  - _type: 2
+    _clip: {fileID: 8300000, guid: 6ca0ffd9a709d324e955ff2d30a24fca, type: 3}
+  - _type: 3
+    _clip: {fileID: 8300000, guid: d07cfeba771f1c3468412b6d1e6230b7, type: 3}
+  - _type: 4
+    _clip: {fileID: 8300000, guid: 45e52101819d5254d8b072c178bd0a03, type: 3}
+  - _type: 5
+    _clip: {fileID: 8300000, guid: 1ce0dc6cfb0673f4fb1a1fb3d28a3fc4, type: 3}
   _audioSourcePrefab: {fileID: 6320426592426308661, guid: 6014bc7c7a1d74b46bf8a6be9a71ae11, type: 3}

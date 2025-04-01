@@ -17,6 +17,7 @@ namespace PlayerSystem
         [SerializeField] private Joystick _joystick;
 
         private Vector3 movement;
+
         public Animator Animator { get; set; }
 
         private void Start()
@@ -67,4 +68,3 @@ namespace PlayerSystem
         }
     }
 }
-

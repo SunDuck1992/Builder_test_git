@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
-using Agava.YandexGames;
 using UnityEngine.SceneManagement;
+using Agava.YandexGames;
 using ConstValues;
 
 namespace YandexSystem
@@ -29,4 +29,3 @@ namespace YandexSystem
         }
     }
 }
-

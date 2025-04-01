@@ -7,8 +7,12 @@ namespace HouseSystem
     [Serializable]
     public class StageEventObjects
     {
-        public List<ParticleSystem> effects;
-        public GameObject eventObject;
-        public int stageNumber;
+        [SerializeField] private List<ParticleSystem> _effects;
+        [SerializeField] private GameObject _eventObject;
+        [SerializeField] private int _stageNumber;
+
+        public int StageNumber => _stageNumber;
+        public GameObject EventObject => _eventObject;
+        public List<ParticleSystem> Effects => _effects;
     }
 }

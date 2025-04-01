@@ -1,8 +1,8 @@
 using System;
-using UnityEngine;
+using ConstValues;
 using HouseSystem;
 using PoolSystem;
-using ConstValues;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace BuildPointSystem
@@ -13,11 +13,11 @@ namespace BuildPointSystem
         [SerializeField] private FXResourses _fXData;
         [SerializeField] private VolumeFXResources _volumeFXResources;
 
-        public ConstructionSite Construction { get; private set; }
-
         public event Action<ConstructionSite> Building;
 
-        void Start()
+        public ConstructionSite Construction { get; private set; }
+
+        private void Start()
         {
 #if !UNITY_EDITOR
         if (PlayerPrefs.HasKey(StringConstValues.StartHouse))
@@ -44,5 +44,3 @@ namespace BuildPointSystem
         }
     }
 }
-
-

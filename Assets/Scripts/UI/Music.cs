@@ -6,10 +6,9 @@ namespace UI
     {
         [SerializeField] private AudioSource _audio;
 
-        void Start()
-        {          
+        private void Start()
+        {
             DontDestroyOnLoad(gameObject);
         }
     }
 }
-

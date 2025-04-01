@@ -7,4 +7,3 @@ namespace PlayerSystem
         public static int Walk = Animator.StringToHash("isWalk");
     }
 }
-

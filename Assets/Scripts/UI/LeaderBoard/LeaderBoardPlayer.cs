@@ -14,4 +14,3 @@ namespace UI.LeaderBoardSystem
         public int Score { get; private set; }
     }
 }
-

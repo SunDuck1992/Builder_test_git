@@ -11,15 +11,6 @@ namespace PlayerSystem
         [SerializeField] private Shop _shop;
         [SerializeField] private PlayerMovement _movement;
 
-        private void OnChangeSkin(GameObject skin)
-        {
-            _skins.ForEach(x => x.SetActive(false));
-            var activeSkin = _skins.Find(x => x.name.Equals(skin.name));
-            activeSkin.SetActive(true);
-            _movement.Animator = activeSkin.GetComponent<Animator>();
-            PlayerPrefs.SetInt(StringConstValues.Skin, _skins.IndexOf(activeSkin));
-        }
-
         private void Start()
         {
             _shop = FindObjectOfType<Shop>();
@@ -32,7 +23,14 @@ namespace PlayerSystem
         {
             _shop.ChangedSkin -= OnChangeSkin;
         }
+
+        private void OnChangeSkin(GameObject skin)
+        {
+            _skins.ForEach(x => x.SetActive(false));
+            var activeSkin = _skins.Find(x => x.name.Equals(skin.name));
+            activeSkin.SetActive(true);
+            _movement.Animator = activeSkin.GetComponent<Animator>();
+            PlayerPrefs.SetInt(StringConstValues.Skin, _skins.IndexOf(activeSkin));
+        }
     }
 }
-
-

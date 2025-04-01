@@ -20,11 +20,11 @@ namespace PoolSystem
         {
             if (_pool.Count > 0)
             {
-                AudioSource @object = _pool.Last.Value;
+                AudioSource audioSource = _pool.Last.Value;
                 _pool.RemoveLast();
-                @object.clip = _resources.GetFX(volumeFXType);
-                @object.Play();
-                return @object;
+                audioSource.clip = _resources.GetFX(volumeFXType);
+                audioSource.Play();
+                return audioSource;
             }
 
             var result = MonoBehaviour.Instantiate(_resources.AudioSource);
@@ -42,4 +42,3 @@ namespace PoolSystem
         }
     }
 }
-

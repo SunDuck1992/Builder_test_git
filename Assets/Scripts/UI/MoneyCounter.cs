@@ -1,5 +1,5 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using PlayerSystem;
 
 namespace UI
@@ -34,4 +34,3 @@ namespace UI
         }
     }
 }
-

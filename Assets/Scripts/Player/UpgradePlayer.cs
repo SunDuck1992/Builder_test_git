@@ -12,9 +12,18 @@ namespace PlayerSystem
         private float _multyplieSpeed = 0.1f;
         private int _startCountBag = 5;
 
-        public event Action Upgraded;
-        public event Action<int> ChangedMoney;
-        public event Action<int> ChangedScore;
+        public static UpgradePlayer Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new UpgradePlayer();
+                }
+
+                return _instance;
+            }
+        }
 
         private UpgradePlayer()
         {
@@ -31,18 +40,9 @@ namespace PlayerSystem
             LevelMoney += UpgradeMoneyLevel;
         }
 
-        public static UpgradePlayer Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new UpgradePlayer();
-                }
-
-                return _instance;
-            }
-        }
+        public event Action Upgraded;
+        public event Action<int> ChangedMoney;
+        public event Action<int> ChangedScore;
 
         public int Money { get; private set; }
         public int UpgradeCountLevel { get; private set; }
@@ -54,7 +54,7 @@ namespace PlayerSystem
         public int StatisticMoney { get; set; }
         public int StatisticScore { get; set; }
         public int Score { get; private set; }
-        public bool isPay { get; private set; }
+        public bool IsPay { get; private set; }
 
         public void ApplayUpgrade(Upgrade upgrade, int cost)
         {
@@ -71,57 +71,6 @@ namespace PlayerSystem
                     UpgradeMoney(cost);
                     break;
             }
-        }
-
-        private void UpgradeCount(int cost)
-        {
-            if (Money >= cost)
-            {
-                UpgradeCountLevel++;
-                Upgraded?.Invoke();
-                ChangeMoney(-cost);
-                isPay = true;
-            }
-            else
-            {
-                isPay = false;
-            }
-
-            PlayerPrefs.SetInt(nameof(UpgradeCountLevel), UpgradeCountLevel);
-        }
-
-        private void UpgradeSpeed(int cost)
-        {
-            if (Money >= cost)
-            {
-                UpgradeSpeedLevel++;
-                LevelSpeed += _multyplieSpeed;
-                ChangeMoney(-cost);
-                isPay = true;
-            }
-            else
-            {
-                isPay = false;
-            }
-
-            PlayerPrefs.SetInt(nameof(UpgradeSpeedLevel), UpgradeSpeedLevel);
-        }
-
-        private void UpgradeMoney(int cost)
-        {
-            if (Money >= cost)
-            {
-                UpgradeMoneyLevel++;
-                LevelMoney++;
-                ChangeMoney(-cost);
-                isPay = true;
-            }
-            else
-            {
-                isPay = false;
-            }
-
-            PlayerPrefs.SetInt(nameof(UpgradeMoneyLevel), UpgradeMoneyLevel);
         }
 
         public void ChangeMoney(int moneyDelta)
@@ -156,6 +105,56 @@ namespace PlayerSystem
             ChangedScore?.Invoke(Score);
             ChangedMoney?.Invoke(Money);
         }
+
+        private void UpgradeCount(int cost)
+        {
+            if (Money >= cost)
+            {
+                UpgradeCountLevel++;
+                Upgraded?.Invoke();
+                ChangeMoney(-cost);
+                IsPay = true;
+            }
+            else
+            {
+                IsPay = false;
+            }
+
+            PlayerPrefs.SetInt(nameof(UpgradeCountLevel), UpgradeCountLevel);
+        }
+
+        private void UpgradeSpeed(int cost)
+        {
+            if (Money >= cost)
+            {
+                UpgradeSpeedLevel++;
+                LevelSpeed += _multyplieSpeed;
+                ChangeMoney(-cost);
+                IsPay = true;
+            }
+            else
+            {
+                IsPay = false;
+            }
+
+            PlayerPrefs.SetInt(nameof(UpgradeSpeedLevel), UpgradeSpeedLevel);
+        }
+
+        private void UpgradeMoney(int cost)
+        {
+            if (Money >= cost)
+            {
+                UpgradeMoneyLevel++;
+                LevelMoney++;
+                ChangeMoney(-cost);
+                IsPay = true;
+            }
+            else
+            {
+                IsPay = false;
+            }
+
+            PlayerPrefs.SetInt(nameof(UpgradeMoneyLevel), UpgradeMoneyLevel);
+        }
     }
 }
-

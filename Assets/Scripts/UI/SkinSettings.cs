@@ -6,8 +6,12 @@ namespace UI
     [Serializable]
     public class SkinSettings
     {
-        public int cost;
-        public GameObject gameObject;
-        public bool isAds;
+        [SerializeField] private int _cost;
+        [SerializeField] private GameObject _gameObject;
+        [SerializeField] private bool _isAds;
+
+        public int Cost => _cost;
+        public GameObject GameObject => _gameObject;
+        public bool IsAds => _isAds;
     }
 }

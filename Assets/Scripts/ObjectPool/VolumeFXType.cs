@@ -7,6 +7,6 @@
         InstallBlock,
         ThrowOutTrash,
         PurchaseImprovment,
-        BuildComplete
+        BuildComplete,
     }
 }

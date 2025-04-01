@@ -1,5 +1,5 @@
-using Agava.YandexGames;
 using UnityEngine;
+using Agava.YandexGames;
 
 namespace LocalizationSystem
 {
@@ -37,5 +37,3 @@ namespace LocalizationSystem
         }
     }
 }
-
-

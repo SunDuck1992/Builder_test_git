@@ -1,5 +1,5 @@
-using Agava.YandexGames;
 using UnityEngine;
+using Agava.YandexGames;
 
 namespace UI.LeaderBoardSystem
 {
@@ -7,7 +7,6 @@ namespace UI.LeaderBoardSystem
     {
         [SerializeField] private GameObject _leaderboardWindow;
         [SerializeField] private GameObject _authorizationWindow;
-
         [SerializeField] private LeaderBoard _leaderBoard;
 
         public void OnButtonClick()
@@ -26,4 +25,3 @@ namespace UI.LeaderBoardSystem
         }
     }
 }
-

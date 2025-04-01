@@ -5,7 +5,6 @@
         None = 0,
         Brick,
         Board,
-        Roof
+        Roof,
     }
 }
-

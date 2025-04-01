@@ -17,4 +17,3 @@ namespace UI.LeaderBoardSystem
         }
     }
 }
-

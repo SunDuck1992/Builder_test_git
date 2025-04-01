@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
 using HouseSystem;
+using UnityEngine;
 
 namespace BuildPointSystem
 {
@@ -15,5 +15,3 @@ namespace BuildPointSystem
         public House StartHouse => _startHouse;
     }
 }
-
-

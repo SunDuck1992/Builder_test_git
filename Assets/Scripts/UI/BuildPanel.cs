@@ -1,10 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System.Linq;
-using HouseSystem;
 using BuildPointSystem;
+using HouseSystem;
 using WareHouseSystem;
 
 namespace UI
@@ -27,36 +27,9 @@ namespace UI
         private void OnDestroy()
         {
             _buildPoint.Building -= OnSetup;
-
-            _construction.HouseBuilding -= ShowHouseBuildProgress;
-            _construction.Building -= ShowProgress;
+            _construction.HouseBuilding -= OnShowHouseBuildProgress;
+            _construction.Building -= OnShowProgress;
             _construction.CompletedStage -= OnCompleteStage;
-        }
-
-        public void OnSetup(ConstructionSite constructionSite)
-        {
-            constructionSite.Building += ShowProgress;
-            constructionSite.CompletedStage += OnCompleteStage;
-            constructionSite.HouseBuilding += ShowHouseBuildProgress;
-
-            _construction = constructionSite;
-            ShowMaterial();
-            ShowHouseBuildProgress(constructionSite.House.CurrnetElementsCount, constructionSite.House.MaxElementsCount);
-        }
-
-        private void ShowProgress(Materials material, int currentCount, int maxCount)
-        {
-            BuildProgress progress = _buildProgresses.Find(x => x.Materials == material);
-
-            if (progress != null)
-            {
-                progress.ShowProgress(currentCount, maxCount);
-            }
-        }
-
-        private void OnCompleteStage()
-        {
-            ShowMaterial();
         }
 
         private void ShowMaterial()
@@ -78,12 +51,36 @@ namespace UI
             });
         }
 
-        private void ShowHouseBuildProgress(int current, int maxCount)
+        private void OnShowHouseBuildProgress(int current, int maxCount)
         {
             _houseProgressText.text = $"{current} / {maxCount}";
             _progressSlider.value = current / (float)maxCount;
         }
+
+        private void OnSetup(ConstructionSite constructionSite)
+        {
+            constructionSite.Building += OnShowProgress;
+            constructionSite.CompletedStage += OnCompleteStage;
+            constructionSite.HouseBuilding += OnShowHouseBuildProgress;
+
+            _construction = constructionSite;
+            ShowMaterial();
+            OnShowHouseBuildProgress(constructionSite.House.CurrnetElementsCount, constructionSite.House.MaxElementsCount);
+        }
+
+        private void OnShowProgress(Materials material, int currentCount, int maxCount)
+        {
+            BuildProgress progress = _buildProgresses.Find(x => x.Materials == material);
+
+            if (progress != null)
+            {
+                progress.ShowProgress(currentCount, maxCount);
+            }
+        }
+
+        private void OnCompleteStage()
+        {
+            ShowMaterial();
+        }
     }
 }
-
-

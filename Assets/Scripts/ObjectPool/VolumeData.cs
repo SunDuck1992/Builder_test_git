@@ -6,7 +6,10 @@ namespace PoolSystem
     [Serializable]
     public struct VolumeData
     {
-        public VolumeFXType type;
-        public AudioClip clip;
+        [SerializeField] private VolumeFXType _type;
+        [SerializeField] private AudioClip _clip;
+
+        public VolumeFXType Type => _type;
+        public AudioClip Clip => _clip;
     }
 }

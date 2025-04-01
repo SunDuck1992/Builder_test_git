@@ -1,7 +1,7 @@
-using Agava.YandexGames;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Agava.YandexGames;
 
 namespace UI.LeaderBoardSystem
 {
@@ -95,4 +95,3 @@ namespace UI.LeaderBoardSystem
         }
     }
 }
-

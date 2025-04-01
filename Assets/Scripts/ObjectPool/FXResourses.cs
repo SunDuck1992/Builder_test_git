@@ -12,8 +12,7 @@ namespace PoolSystem
 
         public void ForEach(Action<FXType, ParticleSystem> action)
         {
-            _datas.ForEach(x => action?.Invoke(x.type, x.particleSystem));
+            _datas.ForEach(x => action?.Invoke(x.Type, x.ParticleSystem));
         }
     }
 }
-

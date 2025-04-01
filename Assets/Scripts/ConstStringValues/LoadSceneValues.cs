@@ -7,4 +7,3 @@ namespace ConstValues
         public const int MainMenuScene = 1;
     }
 }
-

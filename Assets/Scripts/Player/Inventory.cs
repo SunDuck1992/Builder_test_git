@@ -12,17 +12,27 @@ namespace PlayerSystem
         [SerializeField] private Transform _handPosition;
         [SerializeField] private FXResourses _fxData;
 
-        private LinkedList<GameObject> _itemsList = new();
         private readonly float _distanceBetween = 0.25f;
+        private LinkedList<GameObject> _itemsList = new();
+
+        public event Action<int, int> Added;
 
         public int CurrentCount => _itemsList.Count;
         public Materials Material { get; private set; }
 
-        public event Action<int, int> Added;
-
         private void Start()
         {
             OnUpdateCounter();
+        }
+
+        private void OnEnable()
+        {
+            UpgradePlayer.Instance.Upgraded += OnUpdateCounter;
+        }
+
+        private void OnDisable()
+        {
+            UpgradePlayer.Instance.Upgraded -= OnUpdateCounter;
         }
 
         public void AddItem(GameObject item, Materials material)
@@ -49,22 +59,6 @@ namespace PlayerSystem
 
             if (Material != material)
                 return;
-        }
-
-        private void SortList(GameObject item)
-        {
-            if (_itemsList.Count > 0)
-            {
-                Vector3 offset = _itemsList.Last.Value.transform.position + Vector3.up * _distanceBetween;
-                item.transform.position = offset;
-            }
-            else
-            {
-                item.transform.position = _handPosition.position;
-            }
-
-            item.transform.SetParent(_handPosition);
-            item.transform.localRotation = Quaternion.identity;
         }
 
         public Transform GetItems()
@@ -101,20 +95,21 @@ namespace PlayerSystem
 
             OnUpdateCounter();
         }
-
-        private void OnUpdateCounter()
+      
+        private void SortList(GameObject item)
         {
-            Added?.Invoke(_itemsList.Count, UpgradePlayer.Instance.MaxCount);
-        }
+            if (_itemsList.Count > 0)
+            {
+                Vector3 offset = _itemsList.Last.Value.transform.position + Vector3.up * _distanceBetween;
+                item.transform.position = offset;
+            }
+            else
+            {
+                item.transform.position = _handPosition.position;
+            }
 
-        private void OnEnable()
-        {
-            UpgradePlayer.Instance.Upgraded += OnUpdateCounter;
-        }
-
-        private void OnDisable()
-        {
-            UpgradePlayer.Instance.Upgraded -= OnUpdateCounter;
+            item.transform.SetParent(_handPosition);
+            item.transform.localRotation = Quaternion.identity;
         }
 
         private IEnumerator FxPlay(ParticleSystem particle)
@@ -144,6 +139,10 @@ namespace PlayerSystem
                 }
             }
         }
+
+        private void OnUpdateCounter()
+        {
+            Added?.Invoke(_itemsList.Count, UpgradePlayer.Instance.MaxCount);
+        }
     }
 }
-

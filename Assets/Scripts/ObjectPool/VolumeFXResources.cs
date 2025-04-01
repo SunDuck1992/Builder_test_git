@@ -7,7 +7,6 @@ namespace PoolSystem
 
     public partial class VolumeFXResources : ScriptableObject
     {
-
         [SerializeField] private List<VolumeData> _datas;
         [SerializeField] private AudioSource _audioSourcePrefab;
 
@@ -15,8 +14,8 @@ namespace PoolSystem
 
         public AudioClip GetFX(VolumeFXType fX)
         {
-            var result = _datas.Find(x => x.type == fX);
-            return result.clip;
+            var result = _datas.Find(x => x.Type == fX);
+            return result.Clip;
         }
     }
 }

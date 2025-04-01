@@ -1,5 +1,5 @@
-using ConstValues;
 using UnityEngine;
+using ConstValues;
 using YandexSystem;
 using PlayerPrefs = UnityEngine.PlayerPrefs;
 
@@ -15,15 +15,6 @@ namespace UI
         private void OnDisable()
         {
             Application.focusChanged -= OnInBackgroundChangeApp;
-        }
-
-        private void OnInBackgroundChangeApp(bool inApp)
-        {
-            if (!VideoAdd.IsAdvertismetPlayed)
-            {
-                MuteAudio(inApp);
-                PauseGame(!inApp);
-            }
         }
 
         private void MuteAudio(bool value)
@@ -49,6 +40,14 @@ namespace UI
         {
             Time.timeScale = value ? 0 : 1;
         }
+
+        private void OnInBackgroundChangeApp(bool inApp)
+        {
+            if (!VideoAdd.IsAdvertismetPlayed)
+            {
+                MuteAudio(inApp);
+                PauseGame(!inApp);
+            }
+        }
     }
 }
-

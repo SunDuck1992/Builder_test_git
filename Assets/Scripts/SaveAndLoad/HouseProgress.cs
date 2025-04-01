@@ -9,22 +9,27 @@ namespace AutoSaveSystem
     {
         private const string Tamplate = "{0}_{1}";
 
-        public List<string> name = new();
-        public int currentStage;
+        private int _currentStage;
+        private List<string> _name = new();
+
+        public int CurrentStage => _currentStage;
 
         public bool ContainTo(BuildMaterial material, int currentStage)
         {
-            return name.Contains(string.Format(Tamplate, material.transform.parent.name, currentStage));
+            return _name.Contains(string.Format(Tamplate, material.transform.parent.name, currentStage));
         }
 
         public void Save(BuildMaterial buildMaterial, int currentStage)
         {
             if (buildMaterial != null)
             {
-                name.Add(string.Format(Tamplate, buildMaterial.transform.parent.name, currentStage));
+                _name.Add(string.Format(Tamplate, buildMaterial.transform.parent.name, currentStage));
             }
+        }
+
+        public void SetCurrentStage(int stage)
+        {
+            _currentStage = stage;
         }
     }
 }
-
-

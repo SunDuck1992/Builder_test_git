@@ -1,8 +1,7 @@
-using System.Collections;
 using System;
-using Unity.VisualScripting;
-using UnityEngine;
+using System.Collections;
 using System.Linq;
+using UnityEngine;
 using PlayerSystem;
 using PoolSystem;
 using WareHouseSystem;
@@ -23,6 +22,7 @@ namespace HouseSystem
         public event Action CompletedStage;
         public event Action<int, int> HouseBuilding;
         public event Action CompletedBuild;
+
         public House House => _house;
 
         private void OnTriggerEnter(Collider other)
@@ -69,6 +69,7 @@ namespace HouseSystem
                     _house.NextStage();
                     CompletedStage?.Invoke();
                 }
+
                 yield return new WaitForSeconds(_delay);
             }
         }
@@ -88,5 +89,3 @@ namespace HouseSystem
         }
     }
 }
-
-

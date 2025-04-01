@@ -8897,8 +8897,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1315085275}
-        m_TargetAssemblyTypeName: Shop, Assembly-CSharp
-        m_MethodName: OnClickShop
+        m_TargetAssemblyTypeName: UI.Shop, Assembly-CSharp
+        m_MethodName: ClickShop
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12057,8 +12057,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1315085275}
-        m_TargetAssemblyTypeName: Shop, Assembly-CSharp
-        m_MethodName: OnClickShop
+        m_TargetAssemblyTypeName: UI.Shop, Assembly-CSharp
+        m_MethodName: ClickShop
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12522,27 +12522,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 1315085274}
   _skinSettings:
-  - gameObject: {fileID: 823185019}
-    cost: 0
-    isAds: 0
-  - gameObject: {fileID: 1884017823}
-    cost: 500
-    isAds: 0
-  - gameObject: {fileID: 2144162461}
-    cost: 0
-    isAds: 1
-  - gameObject: {fileID: 993232617}
-    cost: 0
-    isAds: 1
-  - gameObject: {fileID: 162072179}
-    cost: 500
-    isAds: 0
-  - gameObject: {fileID: 2110671083}
-    cost: 0
-    isAds: 1
-  - gameObject: {fileID: 75171961}
-    cost: 0
-    isAds: 1
+  - _cost: 0
+    _gameObject: {fileID: 823185019}
+    _isAds: 0
+  - _cost: 500
+    _gameObject: {fileID: 1884017823}
+    _isAds: 0
+  - _cost: 0
+    _gameObject: {fileID: 2144162461}
+    _isAds: 1
+  - _cost: 0
+    _gameObject: {fileID: 993232617}
+    _isAds: 1
+  - _cost: 500
+    _gameObject: {fileID: 162072179}
+    _isAds: 0
+  - _cost: 0
+    _gameObject: {fileID: 2110671083}
+    _isAds: 1
+  - _cost: 0
+    _gameObject: {fileID: 75171961}
+    _isAds: 1
   _buttons:
   - {fileID: 1355739920}
   - {fileID: 1070876116}

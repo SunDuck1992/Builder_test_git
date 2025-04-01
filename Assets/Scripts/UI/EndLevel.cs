@@ -2,10 +2,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using BuildPointSystem;
+using ConstValues;
 using HouseSystem;
 using PlayerSystem;
 using UI.LeaderBoardSystem;
-using ConstValues;
 
 namespace UI
 {
@@ -64,4 +64,3 @@ namespace UI
         }
     }
 }
-

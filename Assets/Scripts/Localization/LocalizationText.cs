@@ -1,6 +1,6 @@
-using Agava.YandexGames;
-using TMPro;
 using UnityEngine;
+using TMPro;
+using Agava.YandexGames;
 
 namespace LocalizationSystem
 {
@@ -38,4 +38,3 @@ namespace LocalizationSystem
         }
     }
 }
-

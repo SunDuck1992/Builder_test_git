@@ -5,9 +5,9 @@ namespace UI
 {
     public class AutoSceneChanger : MonoBehaviour
     {
-        [SerializeField] private EndLevel _endLevel;
-
         private const string NeedChange = StringConstValues.NeedChangeYes;
+
+        [SerializeField] private EndLevel _endLevel;
 
         private void Awake()
         {
@@ -18,4 +18,3 @@ namespace UI
         }
     }
 }
-

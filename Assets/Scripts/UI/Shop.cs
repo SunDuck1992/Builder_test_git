@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using PlayerSystem;
 using ConstValues;
+using PlayerSystem;
 
 namespace UI
 {
@@ -22,21 +22,16 @@ namespace UI
             Load();
         }
 
-        public void OnClickShop(bool isClick)
-        {
-            _animator.SetBool(StringConstValues.IsClick, isClick);
-        }
-
         public void ChangeSkinButtonClick(int index)
         {
 
             var skinSettings = _skinSettings[index];
 
-            if (skinSettings.isAds)
+            if (skinSettings.IsAds)
             {
                 if (PlayerPrefs.HasKey($"skin_{index}"))
                 {
-                    ChangeSkin(skinSettings.gameObject);
+                    ChangeSkin(skinSettings.GameObject);
                     ChangeButtonSprite(index);
                 }
                 else
@@ -54,19 +49,23 @@ namespace UI
             {
                 if (PlayerPrefs.HasKey($"skin_{index}"))
                 {
-                    ChangeSkin(skinSettings.gameObject);
+                    ChangeSkin(skinSettings.GameObject);
                     ChangeButtonSprite(index);
                 }
                 else
                 {
-                    if (UpgradePlayer.Instance.CheckMoney(skinSettings.cost))
+                    if (UpgradePlayer.Instance.CheckMoney(skinSettings.Cost))
                     {
-                        UpgradePlayer.Instance.ChangeMoney(-skinSettings.cost);
-                        ChangeSkin(skinSettings.gameObject);
+                        UpgradePlayer.Instance.ChangeMoney(-skinSettings.Cost);
+                        ChangeSkin(skinSettings.GameObject);
                         ChangeButtonSprite(index);
                     }
                 }
             }
+        }
+        public void ClickShop(bool isClick)
+        {
+            _animator.SetBool(StringConstValues.IsClick, isClick);
         }
 
         private void ChangeSkin(GameObject gameObject)
@@ -99,5 +98,3 @@ namespace UI
         }
     }
 }
-
-
